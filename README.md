@@ -52,7 +52,7 @@ Browse styles shared by others and install with one command:
 /add-output-style
 ```
 
-This shows a list of community-shared styles. Pick one and it's imported automatically.
+This shows a list of community styles from `registry.json`. Pick one and it's imported automatically.
 
 You can also import directly from a URL or local file:
 
@@ -109,15 +109,15 @@ additionalContext at the start of every Claude Code session.
 ├── styles/
 │   ├── concise.md
 │   └── teaching.md
+├── registry.json
 └── README.md
 ```
 
 ## Sharing Styles
 
-Share styles with the community — no repository or Pull Request needed:
-
-1. `/create-output-style` — create and share in one step
-2. Your style is automatically listed in `/add-output-style` for all users
+1. `/create-output-style` — create a style and upload it to Gist
+2. Share the Gist URL directly — others can import it with `/add-output-style <URL>`
+3. To list your style in the community registry, submit a PR adding an entry to `registry.json`
 
 ## Token Cost Warning
 

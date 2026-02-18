@@ -42,11 +42,11 @@ Claude Codeの [Output Style](https://docs.claude.com/en/docs/claude-code/output
 /create-output-style
 ```
 
-Claudeがスタイルの定義をガイドし、ローカルに保存した後、コミュニティに共有できます。共有されたスタイルは `/add-output-style` の一覧に表示され、全ユーザーが利用可能になります。
+Claudeがスタイルの定義をガイドし、ローカルに保存した後、Gistにアップロードして共有できます。
 
 ## コミュニティスタイルのブラウズ & インポート
 
-他のユーザーが共有したスタイルを一覧から選んでインストールできます:
+コミュニティが共有したスタイルを `registry.json` の一覧から選んでインストールできます:
 
 ```
 /add-output-style
@@ -107,15 +107,15 @@ additionalContext として Claude Code に注入されます。
 ├── styles/
 │   ├── concise.md
 │   └── teaching.md
+├── registry.json
 └── README.md
 ```
 
 ## スタイルの共有
 
-リポジトリやPull Requestは不要です:
-
-1. `/create-output-style` で作成と共有を一度に実行
-2. 共有したスタイルは `/add-output-style` の一覧に自動で表示
+1. `/create-output-style` でスタイルを作成し、Gistにアップロード
+2. Gist URLを共有すれば、他のユーザーは `/add-output-style <URL>` でインポート可能
+3. コミュニティ一覧に掲載するには、`registry.json` にエントリを追加するPRを送信
 
 ## トークンコストに関する注意
 

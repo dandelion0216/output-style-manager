@@ -20,24 +20,25 @@ disable-model-invocation: true
 
 **`$ARGUMENTS` が空の場合: コミュニティ一覧を表示**
 
-Bash で以下のコマンドを実行し、共有されたスタイル一覧を取得する:
+`${CLAUDE_PLUGIN_ROOT}/registry.json` を Read で読み取り、`styles` 配列をパースする。
 
-```bash
-gh issue list --repo dandelion0216/output-style-manager --label "shared-style" --state open --json number,title,body --limit 50
-```
+各エントリには以下のフィールドがある:
+- `name` — スタイル名
+- `description` — スタイルの説明
+- `gist_id` — Gist ID（null の場合は同梱スタイル）
+- `author` — 作成者
+- `bundled` — 同梱スタイルかどうか
 
-取得したJSONから各Issueの情報をパースする:
-- `title` → スタイル名
-- `body` → Description と Gist URL を抽出（`**Description**:` と `**Gist URL**:` の行を探す）
+**同梱スタイル（`bundled: true`）は一覧から除外する**（これらは既にインストール済み）。
 
-パース結果を AskUserQuestion でユーザーに提示する:
-- 各選択肢の label にスタイル名、description にスタイルの説明を設定
+コミュニティスタイル（`bundled: false`）を AskUserQuestion でユーザーに提示する:
+- 各選択肢の label にスタイル名、description にスタイルの説明と作成者を設定
 - 「URLを直接指定」も選択肢に含める
 
-ユーザーが選択したスタイルの Gist URL を使って手順2に進む。
+ユーザーが選択したスタイルの `gist_id` を使って手順2に進む（`gh gist view <gist_id> --raw`）。
 
 **コミュニティスタイルが見つからない場合:**
-- 「共有スタイルはまだ登録されていません。URLまたはファイルパスを直接指定してください。」と案内
+- 「コミュニティスタイルはまだ登録されていません。URLまたはファイルパスを直接指定してください。」と案内
 - AskUserQuestion でインポート元を質問する
 
 **`$ARGUMENTS` がURLまたはファイルパスの場合:**

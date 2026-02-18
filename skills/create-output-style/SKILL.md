@@ -56,10 +56,10 @@ mkdir -p ~/.claude/custom-output-styles
 ファイル名はスタイル名をそのまま使用（例: `formal-japanese.md`）。
 Write ツールで `~/.claude/custom-output-styles/<スタイル名>.md` に保存する。
 
-### 5. Gistアップロード & コミュニティ登録
+### 5. Gistアップロード & コミュニティ共有
 
 AskUserQuestion で確認する:
-- 「コミュニティに共有しますか？（Gistにアップロードし、他のユーザーが `/add-output-style` で見つけられるようになります）」
+- 「コミュニティに共有しますか？（Gistにアップロードし、共有URLを取得できます）」
 - 選択肢: 「共有する」「ローカルのみ」
 
 **「共有する」の場合:**
@@ -70,35 +70,26 @@ AskUserQuestion で確認する:
 gh gist create ~/.claude/custom-output-styles/<スタイル名>.md --desc "<スタイルの説明>" --public
 ```
 
-出力からGist URLを取得する。
+出力からGist URLとGist IDを取得する。
 
-**ステップ5b: コミュニティレジストリに登録**
+**ステップ5b: レジストリ登録の案内**
 
-GitHub Issue を作成してスタイルを登録する:
+以下の情報をユーザーに伝える:
+- Gist URL
+- 「コミュニティの `/add-output-style` 一覧に表示するには、output-style-manager リポジトリの `registry.json` にエントリを追加するPRを送ってください。」
+- 追加するエントリの例を提示:
 
-```bash
-gh issue create \
-  --repo dandelion0216/output-style-manager \
-  --label "shared-style" \
-  --title "<スタイル名>" \
-  --body "$(cat <<'ISSUE_EOF'
-## Style Info
-
-- **Name**: <スタイル名>
-- **Description**: <スタイルの説明>
-- **Gist URL**: <Gist URL>
-- **Author**: $(gh api user --jq .login 2>/dev/null || echo "anonymous")
-
-## Content Preview
-
-```markdown
-<スタイルファイルの先頭20行程度>
-```
-ISSUE_EOF
-)"
+```json
+{
+  "name": "<スタイル名>",
+  "description": "<スタイルの説明>",
+  "gist_id": "<Gist ID>",
+  "author": "<GitHubユーザー名>",
+  "bundled": false
+}
 ```
 
-Gist URL と Issue URL をユーザーに案内する。
+- 「PRが不要な場合は、Gist URLを直接共有すれば `/add-output-style <URL>` でインポートできます。」
 
 ### 6. スタイルの有効化を提案
 
@@ -121,4 +112,4 @@ echo "<スタイル名>" > ~/.claude/output-style-active
 - Gist URL（アップロードした場合）
 - 現在のアクティブスタイル
 - `/set-output-style <スタイル名>` でいつでも有効化できる旨
-- 共有した場合: 「他のユーザーは `/add-output-style` で一覧から選択できます」
+- 共有した場合: Gist URL と「`/add-output-style <Gist URL>` で他のユーザーもインポートできます」

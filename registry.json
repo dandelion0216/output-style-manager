@@ -1,0 +1,18 @@
+{
+  "styles": [
+    {
+      "name": "concise",
+      "description": "Minimal, direct responses with no filler",
+      "gist_id": null,
+      "author": "dandelion0216",
+      "bundled": true
+    },
+    {
+      "name": "teaching",
+      "description": "Step-by-step explanations with examples",
+      "gist_id": null,
+      "author": "dandelion0216",
+      "bundled": true
+    }
+  ]
+}
