@@ -1,0 +1,17 @@
+{
+  "name": "output-style-distribution-template",
+  "owner": {
+    "name": "Your Name"
+  },
+  "metadata": {
+    "description": "Template marketplace for distributing custom Output Styles as Claude Code plugins"
+  },
+  "plugins": [
+    {
+      "name": "output-style-distribution-template",
+      "source": "./",
+      "description": "A template plugin for creating and distributing custom Output Styles for Claude Code",
+      "version": "0.0.1"
+    }
+  ]
+}

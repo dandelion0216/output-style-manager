@@ -1,0 +1,10 @@
+{
+  "name": "output-style-distribution-template",
+  "description": "A template plugin for creating and distributing custom Output Styles for Claude Code",
+  "version": "0.0.1",
+  "author": {
+    "name": "Your Name"
+  },
+  "repository": "https://github.com/your-username/your-repo",
+  "license": "MIT"
+}
