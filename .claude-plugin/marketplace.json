@@ -1,17 +1,17 @@
 {
-  "name": "output-style-distribution-template",
+  "name": "output-style-manager",
   "owner": {
-    "name": "Your Name"
+    "name": "dandelion0216"
   },
   "metadata": {
-    "description": "Template marketplace for distributing custom Output Styles as Claude Code plugins"
+    "description": "Marketplace for Output Style Manager plugin"
   },
   "plugins": [
     {
-      "name": "output-style-distribution-template",
+      "name": "output-style-manager",
       "source": "./",
-      "description": "A template plugin for creating and distributing custom Output Styles for Claude Code",
-      "version": "0.0.1"
+      "description": "Manage and switch Output Styles for Claude Code. Includes bundled styles and supports importing custom styles from URLs or files.",
+      "version": "0.1.0"
     }
   ]
 }

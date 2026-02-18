@@ -1,10 +1,10 @@
 {
-  "name": "output-style-distribution-template",
-  "description": "A template plugin for creating and distributing custom Output Styles for Claude Code",
-  "version": "0.0.1",
+  "name": "output-style-manager",
+  "description": "Manage and switch Output Styles for Claude Code. Includes bundled styles and supports importing custom styles from URLs or files.",
+  "version": "0.1.0",
   "author": {
-    "name": "Your Name"
+    "name": "dandelion0216"
   },
-  "repository": "https://github.com/your-username/your-repo",
+  "repository": "https://github.com/dandelion0216/output-style-manager",
   "license": "MIT"
 }

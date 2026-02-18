@@ -1,166 +1,107 @@
-# Output Style 配布プラグイン テンプレート
+# Output Style Manager
 
-Claude Codeのカスタム [Output Style](https://docs.claude.com/en/docs/claude-code/output-styles) をプラグインとして作成・配布するためのテンプレートです。
-
-## 概要
-
-Markdownファイル（`style.md`）にスタイル指示を記述するだけで、Claude Codeプラグインとして配布できます。インストールしたユーザーのセッション開始時に、スタイルが自動適用されます。
+Claude Codeの [Output Style](https://docs.claude.com/en/docs/claude-code/output-styles) を管理・切り替えするプラグインです。インストールしてスタイルを選ぶだけで、自動的に適用されます。
 
 ## クイックスタート
 
-### 1. リポジトリをForkまたはクローン
-
-```bash
-gh repo fork dandelion0216/claude-code-output-style-distribution-plugin
-```
-
-### 2. `style.md` を編集
-
-Output Styleの指示をMarkdownで記述します。YAMLフロントマッター（`name`, `description`）はドキュメント用で、本文がClaude Codeのセッションに注入されます。
-
-```markdown
----
-name: My Awesome Style
-description: 海賊風に応答するスタイル
----
-
-あなたは「海賊」モードです。すべての質問に海賊風の口調で答えてください。
-航海のメタファーを使い、時折「アール！」と言ってください。
-```
-
-### 3. `.claude-plugin/plugin.json` を編集
-
-プラグインのメタデータを自分のスタイルに合わせて更新します:
-
-```json
-{
-  "name": "pirate-output-style",
-  "description": "海賊風に応答するOutput Style",
-  "version": "1.0.0",
-  "author": {
-    "name": "Your Name"
-  },
-  "repository": "https://github.com/your-username/pirate-output-style",
-  "license": "MIT"
-}
-```
-
-`.claude-plugin/marketplace.json` も同じ名前・説明・バージョンに更新してください。
-
-### 4. GitHubにプッシュしてインストール
-
-```bash
-git add -A && git commit -m "Create my custom output style"
-git push origin main
-```
-
-他のユーザーは以下の手順でインストールできます:
+### 1. プラグインをインストール
 
 ```
 /plugins
-# → Add marketplace → GitHubリポジトリを入力（例: your-username/pirate-output-style）
-# → プラグインをインストール
+# → Add marketplace → dandelion0216/output-style-manager
+# → "output-style-manager" をインストール
 ```
+
+### 2. スタイルを選択
+
+```
+/set-output-style
+```
+
+一覧から選択するか、スタイル名を直接指定できます:
+
+```
+/set-output-style concise
+```
+
+### 3. 新しいセッションを開始
+
+選択したスタイルは次回のセッション開始時から適用されます。
+
+スタイルを無効化するには:
+
+```
+/set-output-style off
+```
+
+## カスタムスタイルのインポート
+
+URLやローカルファイルからスタイルをインポートできます:
+
+```
+/add-output-style https://example.com/my-style.md
+/add-output-style /path/to/my-style.md
+```
+
+インポートされたスタイルは `~/.claude/custom-output-styles/` に保存され、`/set-output-style` で選択できます。
+
+### スタイルファイルのフォーマット
+
+```markdown
+---
+name: My Style
+description: スタイルの簡潔な説明
+---
+
+スタイルの指示をここに記述します。この内容が毎セッション開始時に
+additionalContext として Claude Code に注入されます。
+```
+
+## 同梱スタイル
+
+| スタイル | 説明 |
+|---------|------|
+| `concise` | 無駄を省いた最小限の応答 |
+| `teaching` | ステップバイステップの説明と例の提示 |
 
 ## 仕組み
 
-このプラグインは **SessionStartフック** を使い、セッション開始時にスタイル指示を注入します:
-
-1. セッション開始時に Claude Code が `hooks-handlers/session-start.sh` を実行
-2. スクリプトが `style.md` を読み取り、YAMLフロントマッターを除去し、本文をJSONエスケープ
-3. 本文が `additionalContext` としてフックレスポンスに出力
-4. Claude Code がセッションの追加指示として適用
+1. セッション開始時に `SessionStart` フックが `session-start.sh` を実行
+2. スクリプトが `~/.claude/output-style-active` からアクティブスタイル名を読み取り
+3. カスタムスタイル（`~/.claude/custom-output-styles/`）を優先し、次に同梱スタイル（`styles/`）を検索
+4. スタイルの内容が `additionalContext` として注入
 
 ## ファイル構成
 
 ```
 ├── .claude-plugin/
-│   ├── plugin.json          # プラグインメタデータ（要編集）
-│   └── marketplace.json     # マーケットプレイス配布設定（要編集）
+│   ├── plugin.json
+│   └── marketplace.json
 ├── hooks/
-│   └── hooks.json           # SessionStartフック定義（編集不要）
+│   └── hooks.json
 ├── hooks-handlers/
-│   └── session-start.sh     # style.mdを読み取りJSON出力（編集不要）
-├── style.md                 # Output Style定義（要編集）
-└── README.md                # 英語版ドキュメント
+│   └── session-start.sh
+├── skills/
+│   ├── set-output-style/
+│   │   └── SKILL.md
+│   └── add-output-style/
+│       └── SKILL.md
+├── styles/
+│   ├── concise.md
+│   └── teaching.md
+└── README.md
 ```
 
-**編集が必要なファイル:** `style.md`, `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`
+## スタイルの貢献
 
-**編集不要なファイル:** `hooks/hooks.json`, `hooks-handlers/session-start.sh`
+同梱スタイルに追加したい場合:
 
-## 良いOutput Styleを書くコツ
-
-### ヒント
-
-- 求める振る舞いを具体的に記述する
-- Markdownの構造（見出し、リスト）を使って整理する
-- さまざまなプロンプトでテストし、一貫した振る舞いを確認する
-- 指示は簡潔に — 長すぎるとトークンコストが増加する
-
-### 例: 簡潔スタイル
-
-```markdown
----
-name: Concise
-description: 無駄を省いた最小限の応答
----
-
-あなたは「簡潔」モードです。
-
-## ルール
-
-- できるだけ少ない言葉で回答する
-- 前置き（「もちろん！」「良い質問ですね！」等）は不要
-- 明示的に求められない限り要約しない
-- コードブロックは説明なしで提示する（求められた場合を除く）
-- 可能な限り一行で回答する
-```
-
-### 例: 教育スタイル
-
-```markdown
----
-name: Teaching
-description: ステップバイステップで概念を説明し、例を提示する
----
-
-あなたは「教育」モードです。
-
-## ルール
-
-- すべての回答を番号付きステップに分解する
-- 各概念に具体的な例を提示する
-- 理解度確認のためフォローアップ質問をする
-- 複雑なトピックにはアナロジーを使って説明する
-```
+1. 上記フォーマットに従って `styles/` に `.md` ファイルを作成
+2. このリポジトリにPull Requestを送信
 
 ## トークンコストに関する注意
 
-`style.md` の内容は毎セッション開始時に追加コンテキストとして注入されます。指示が長いほどトークン消費が増加します。効果を保ちつつ、できるだけ簡潔に記述してください。
-
-## ローカルテスト
-
-公開前にローカルでテストできます:
-
-```bash
-# session-start.sh を直接実行
-CLAUDE_PLUGIN_ROOT="$(pwd)" bash hooks-handlers/session-start.sh
-
-# JSON出力の妥当性を検証
-CLAUDE_PLUGIN_ROOT="$(pwd)" bash hooks-handlers/session-start.sh | python3 -m json.tool
-```
-
-## バージョン管理
-
-スタイルを更新する際は、以下の2ファイルのバージョンを同時に更新してください:
-
-1. `.claude-plugin/plugin.json` → `"version"`
-2. `.claude-plugin/marketplace.json` → `"plugins"[0]."version"`
-
-**バージョニング規則:**
-- スタイル内容の修正: パッチ（1.0.0 → 1.0.1）
-- 振る舞いの大幅な変更: マイナー（1.0.0 → 1.1.0）
+アクティブなスタイルの内容は毎セッション開始時に追加コンテキストとして注入されます。トークン消費を最小限にするため、スタイル定義は簡潔に保ってください。
 
 ## ライセンス
 
