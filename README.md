@@ -92,12 +92,14 @@ additionalContext at the start of every Claude Code session.
 └── README.md
 ```
 
-## Contributing Styles
+## Sharing Styles
 
-Want to add a style to the bundled collection?
+Created a useful style? Share it with others:
 
-1. Create a `.md` file in `styles/` following the format above
-2. Submit a Pull Request to this repository
+- Upload the `.md` file to a GitHub Gist, blog post, or any URL
+- Others can import it with `/add-output-style <URL>`
+
+No repository or Pull Request needed.
 
 ## Token Cost Warning
 

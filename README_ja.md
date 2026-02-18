@@ -92,12 +92,14 @@ additionalContext として Claude Code に注入されます。
 └── README.md
 ```
 
-## スタイルの貢献
+## スタイルの共有
 
-同梱スタイルに追加したい場合:
+便利なスタイルを作成したら、他のユーザーと共有できます:
 
-1. 上記フォーマットに従って `styles/` に `.md` ファイルを作成
-2. このリポジトリにPull Requestを送信
+- `.md` ファイルを GitHub Gist、ブログ記事、任意のURLにアップロード
+- 他のユーザーは `/add-output-style <URL>` でインポート可能
+
+リポジトリやPull Requestは不要です。
 
 ## トークンコストに関する注意
 
