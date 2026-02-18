@@ -1,8 +1,6 @@
 ---
 name: set-output-style
-description: |
-  Output Styleを切り替える。
-  「スタイルを変更」「output styleを設定」「set output style」で呼び出される。
+description: "Output Styleを切り替える。「スタイルを変更」「set output style」で呼び出される。"
 disable-model-invocation: true
 ---
 

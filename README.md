@@ -34,9 +34,27 @@ To disable the active style:
 /set-output-style off
 ```
 
-## Importing Custom Styles
+## Creating Custom Styles
 
-You can import styles from URLs or local files:
+Create your own style interactively and get a shareable URL:
+
+```
+/create-output-style
+```
+
+Claude will guide you through defining the style, save it locally, and optionally share it with the community. Shared styles appear in `/add-output-style` for all users.
+
+## Browsing & Importing Community Styles
+
+Browse styles shared by others and install with one command:
+
+```
+/add-output-style
+```
+
+This shows a list of community-shared styles. Pick one and it's imported automatically.
+
+You can also import directly from a URL or local file:
 
 ```
 /add-output-style https://example.com/my-style.md
@@ -84,7 +102,9 @@ additionalContext at the start of every Claude Code session.
 ├── skills/
 │   ├── set-output-style/
 │   │   └── SKILL.md
-│   └── add-output-style/
+│   ├── add-output-style/
+│   │   └── SKILL.md
+│   └── create-output-style/
 │       └── SKILL.md
 ├── styles/
 │   ├── concise.md
@@ -94,12 +114,10 @@ additionalContext at the start of every Claude Code session.
 
 ## Sharing Styles
 
-Created a useful style? Share it with others:
+Share styles with the community — no repository or Pull Request needed:
 
-- Upload the `.md` file to a GitHub Gist, blog post, or any URL
-- Others can import it with `/add-output-style <URL>`
-
-No repository or Pull Request needed.
+1. `/create-output-style` — create and share in one step
+2. Your style is automatically listed in `/add-output-style` for all users
 
 ## Token Cost Warning
 

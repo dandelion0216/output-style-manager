@@ -34,9 +34,25 @@ Claude Codeの [Output Style](https://docs.claude.com/en/docs/claude-code/output
 /set-output-style off
 ```
 
-## カスタムスタイルのインポート
+## カスタムスタイルの作成
 
-URLやローカルファイルからスタイルをインポートできます:
+対話形式でスタイルを作成し、共有URLを取得できます:
+
+```
+/create-output-style
+```
+
+Claudeがスタイルの定義をガイドし、ローカルに保存した後、コミュニティに共有できます。共有されたスタイルは `/add-output-style` の一覧に表示され、全ユーザーが利用可能になります。
+
+## コミュニティスタイルのブラウズ & インポート
+
+他のユーザーが共有したスタイルを一覧から選んでインストールできます:
+
+```
+/add-output-style
+```
+
+URLやローカルファイルから直接インポートも可能です:
 
 ```
 /add-output-style https://example.com/my-style.md
@@ -84,7 +100,9 @@ additionalContext として Claude Code に注入されます。
 ├── skills/
 │   ├── set-output-style/
 │   │   └── SKILL.md
-│   └── add-output-style/
+│   ├── add-output-style/
+│   │   └── SKILL.md
+│   └── create-output-style/
 │       └── SKILL.md
 ├── styles/
 │   ├── concise.md
@@ -94,12 +112,10 @@ additionalContext として Claude Code に注入されます。
 
 ## スタイルの共有
 
-便利なスタイルを作成したら、他のユーザーと共有できます:
+リポジトリやPull Requestは不要です:
 
-- `.md` ファイルを GitHub Gist、ブログ記事、任意のURLにアップロード
-- 他のユーザーは `/add-output-style <URL>` でインポート可能
-
-リポジトリやPull Requestは不要です。
+1. `/create-output-style` で作成と共有を一度に実行
+2. 共有したスタイルは `/add-output-style` の一覧に自動で表示
 
 ## トークンコストに関する注意
 
