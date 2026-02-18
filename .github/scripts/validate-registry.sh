@@ -140,8 +140,9 @@ for i in $(seq 0 $((ENTRY_COUNT - 1))); do
     ERRORS+=("Entry \"$ENTRY_NAME\": community style (bundled: false) must have a non-null gist_id")
   fi
 
-  if [[ "$BUNDLED" == "true" && "$GIST_ID" != "null" ]]; then
-    WARNINGS+=("Entry \"$ENTRY_NAME\": bundled style has non-null gist_id (expected null)")
+  # bundled styles should also have gist_id for reference
+  if [[ "$BUNDLED" == "true" && "$GIST_ID" == "null" ]]; then
+    WARNINGS+=("Entry \"$ENTRY_NAME\": bundled style has no gist_id (recommended to set one)")
   fi
 
   if [ -z "$ENTRY_NAME" ]; then
