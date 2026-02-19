@@ -11,7 +11,7 @@
       "name": "output-style-manager",
       "source": "./",
       "description": "Manage and switch Output Styles for Claude Code. Includes bundled styles and supports importing custom styles from URLs or files.",
-      "version": "0.1.0"
+      "version": "0.1.1"
     }
   ]
 }
