@@ -13,6 +13,13 @@
       "gist_id": "4e98d377df11b7fe7ea82d181e90bcf5",
       "author": "dandelion0216",
       "bundled": true
+    },
+    {
+      "name": "japanese-mandarin",
+      "description": "日本語の後に台湾華語（繁體中文）を併記する丁寧・簡潔スタイル",
+      "gist_id": "d56d72b542bf6bc9a8cc10672d011969",
+      "author": "dandelion0216",
+      "bundled": false
     }
   ]
 }
